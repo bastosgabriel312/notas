@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiOperation;
 public class NotaController {
 	
 	@Autowired
-	public NotaRepository repository;
+	private NotaRepository repository;
 	
 	
 	@GetMapping
@@ -69,7 +69,7 @@ public class NotaController {
 	
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Mostra detalhes de uma nota")
-	public ResponseEntity<DetalhesNotaDTO> detalhar(@PathVariable Long id) {
+	public ResponseEntity<DetalhesNotaDTO> detalhar(@PathVariable String id) {
 		Optional<Nota> nota = repository.findById(id);
 		if (nota.isPresent()) {
 			return ResponseEntity.ok(new DetalhesNotaDTO(nota.get()));
@@ -81,7 +81,7 @@ public class NotaController {
 	@PutMapping("/{id}")
 	@Transactional
 	@ApiOperation(value = "Atualiza uma anotação")
-	public ResponseEntity<NotaDTO> atualizar(@PathVariable Long id,
+	public ResponseEntity<NotaDTO> atualizar(@PathVariable("id") String id,
 			@RequestBody @Validated AtualizacaoNotaForm notaForm) {
 		Optional<Nota> nota = repository.findById(id);
 		if (nota.isPresent()) {
@@ -95,10 +95,10 @@ public class NotaController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	@ApiOperation(value = "Remove uma nota")
-	public ResponseEntity<?> remover(@PathVariable Long id) {
+	public ResponseEntity<?> remover(@PathVariable("id") String id) {
 		Optional<Nota> nota = repository.findById(id);
 		if (nota.isPresent()) {
-			repository.deleteById(id);
+			repository.delete(nota.get());
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();

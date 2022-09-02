@@ -2,15 +2,16 @@ package br.com.linux.notas.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "notas")
 public class Nota {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	
+	@Id
+	private String id;
 	private String titulo;
 	private String texto;
 	private LocalDateTime dataCriacao = LocalDateTime.now() ;
@@ -34,7 +35,7 @@ public class Nota {
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 

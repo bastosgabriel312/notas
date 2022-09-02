@@ -2,10 +2,12 @@ package br.com.linux.notas.DTO;
 
 import java.time.LocalDateTime;
 
+import org.bson.types.ObjectId;
+
 import br.com.linux.notas.model.Nota;
 
 public class DetalhesNotaDTO {
-	private Long id;
+	private String id;
 	private String titulo;
 	private String texto;
 	private LocalDateTime dataCriacao;
@@ -17,7 +19,7 @@ public class DetalhesNotaDTO {
 		this.texto = nota.getTexto();
 		this.dataCriacao = nota.getDataCriacao();
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	public String getTitulo() {

@@ -2,12 +2,13 @@ package br.com.linux.notas.DTO;
 
 import java.time.LocalDateTime;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 
 import br.com.linux.notas.model.Nota;
 
 public class NotaDTO {
-	private Long id;
+	private String id;
 	private String titulo;
 	private String texto;
 	private LocalDateTime dataCriacao;
@@ -18,10 +19,10 @@ public class NotaDTO {
 		this.texto = nota.getTexto();
 		this.dataCriacao = nota.getDataCriacao();
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getTitulo() {
