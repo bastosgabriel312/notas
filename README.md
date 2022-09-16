@@ -6,3 +6,4 @@
 ## Tecnologias utilizadas (Docs)
   * Java 8
   * Spring Framework
+  * MongoDB
