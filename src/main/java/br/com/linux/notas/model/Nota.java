@@ -2,15 +2,13 @@ package br.com.linux.notas.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Id;
-
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "notas")
 public class Nota {
 	
-	@Id
+	@MongoId
 	private String id;
 	private String titulo;
 	private String texto;

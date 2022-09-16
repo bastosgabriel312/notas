@@ -1,16 +1,12 @@
 package br.com.linux.notas.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value = "Nota")
-@RequestMapping("/notas")
+@RequestMapping("/api/notas")
 public class NotaController {
 	
 	@Autowired
@@ -43,15 +39,14 @@ public class NotaController {
 	
 	@GetMapping
 	@ApiOperation(value = "Mostra lista de anotações")
-	public Page<NotaDTO> listar(@RequestParam(required = false) String titulo,
-			@RequestParam(required = false) String dataCriacao,
-			@PageableDefault(sort = "id", direction = Direction.ASC) Pageable paginacao){
+	public List<Nota> listar(@RequestParam(required = false) String titulo,
+			@RequestParam(required = false) String dataCriacao){
 		
 		if (titulo==null) {
-			Page<Nota> notas = repository.findAll(paginacao);
+			List<Nota> notas = repository.findAll();
 			return NotaDTO.converter(notas);
 		} else {
-			Page<Nota> notas = repository.findByTitulo(titulo,paginacao);
+			List<Nota> notas = repository.findByTitulo(titulo);
 			return NotaDTO.converter(notas);
 		}
 	}

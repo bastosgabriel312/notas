@@ -1,9 +1,7 @@
 package br.com.linux.notas.DTO;
 
 import java.time.LocalDateTime;
-
-import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
+import java.util.List;
 
 import br.com.linux.notas.model.Nota;
 
@@ -40,8 +38,8 @@ public class NotaDTO {
 	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
-	public static Page<NotaDTO> converter(Page<Nota> notas) {
-			return notas.map(NotaDTO::new);	
+	public static List<Nota> converter(List<Nota> notas) {
+			return notas;	
 			
 		}
 	

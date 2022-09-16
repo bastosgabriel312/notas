@@ -2,8 +2,6 @@ package br.com.linux.notas.DTO;
 
 import java.time.LocalDateTime;
 
-import org.bson.types.ObjectId;
-
 import br.com.linux.notas.model.Nota;
 
 public class DetalhesNotaDTO {
