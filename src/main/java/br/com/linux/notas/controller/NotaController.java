@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +58,7 @@ public class NotaController {
 	public ResponseEntity<NotaDTO> criar(@Validated @RequestBody NotaForm notaForm, UriComponentsBuilder uriBuilder) {
 		Nota nota = notaForm.converter();
 		repository.save(nota);
-		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(nota.getId()).toUri();
+		URI uri = uriBuilder.path("/notas/{id}").buildAndExpand(nota.getId()).toUri();
 		return ResponseEntity.created(uri).body(new NotaDTO(nota));
 
 	}
@@ -65,10 +66,11 @@ public class NotaController {
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Mostra detalhes de uma nota")
 	public ResponseEntity<DetalhesNotaDTO> detalhar(@PathVariable String id) {
-		Optional<Nota> nota = repository.findById(id);
+		Optional<Nota> nota = repository.findById(new ObjectId(id));
 		if (nota.isPresent()) {
 			return ResponseEntity.ok(new DetalhesNotaDTO(nota.get()));
 		}
+		System.out.println("nota não encontrada");
 		return ResponseEntity.notFound().build();
 
 	}
@@ -78,9 +80,9 @@ public class NotaController {
 	@ApiOperation(value = "Atualiza uma anotação")
 	public ResponseEntity<NotaDTO> atualizar(@PathVariable("id") String id,
 			@RequestBody @Validated AtualizacaoNotaForm notaForm) {
-		Optional<Nota> nota = repository.findById(id);
+		Optional<Nota> nota = repository.findById(new ObjectId(id));
 		if (nota.isPresent()) {
-			Nota notaAtualizada = notaForm.atualizar(id, repository);
+			Nota notaAtualizada = notaForm.atualizar(new ObjectId(id), repository);
 			return ResponseEntity.ok(new NotaDTO(notaAtualizada));
 		}
 		return ResponseEntity.notFound().build();
@@ -91,7 +93,7 @@ public class NotaController {
 	@Transactional
 	@ApiOperation(value = "Remove uma nota")
 	public ResponseEntity<?> remover(@PathVariable("id") String id) {
-		Optional<Nota> nota = repository.findById(id);
+		Optional<Nota> nota = repository.findById(new ObjectId(id));
 		if (nota.isPresent()) {
 			repository.delete(nota.get());
 			return ResponseEntity.ok().build();

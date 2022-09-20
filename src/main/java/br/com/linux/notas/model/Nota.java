@@ -2,6 +2,7 @@ package br.com.linux.notas.model;
 
 import java.time.LocalDateTime;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -9,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 public class Nota {
 	
 	@MongoId
-	private String id;
+	private ObjectId id;
 	private String titulo;
 	private String texto;
 	private LocalDateTime dataCriacao = LocalDateTime.now() ;
@@ -34,7 +35,7 @@ public class Nota {
 		this.texto = texto;
 	}
 	public String getId() {
-		return id;
+		return id.toString();
 	}
 
 
